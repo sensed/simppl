@@ -490,6 +490,12 @@ Dispatcher::~Dispatcher()
    dbus_connection_close(conn_);
    dbus_connection_unref(conn_);
 
+   // remove references in still existing stubs
+   for(auto stub : d->stubs_)
+   {
+       stub.second->disp_ = nullptr;
+   }
+
    delete d;
    d = 0;
 }
